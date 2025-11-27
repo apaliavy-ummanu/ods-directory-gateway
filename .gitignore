@@ -1,0 +1,91 @@
+### Go ###
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of `go build`, `go install`, `go test` etc.
+bin/
+build/
+dist/
+
+# Test cache
+*.prof
+*.cover
+*.coverprofile
+
+# Go workspace files
+go.work
+go.work.sum
+
+# Vendor (if you don't use `go mod vendor`)
+vendor/
+
+# Dependency dir created by tools
+Godeps/
+
+# Local databases / temporary data
+*.db
+*.sqlite
+*.sqlite3
+
+### IntelliJ IDEA / GoLand ###
+# Project files (safe to ignore)
+.idea/
+# If you want to keep run configs, comment out:
+# .idea/runConfigurations/
+
+# Workspace-specific files
+*.iml
+out/
+
+# IntelliJ caches
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf/
+
+# Generated files
+.idea/**/contentModel.xml
+.idea/**/modules.xml
+.idea/**/misc.xml
+
+### Logs / temp ###
+*.log
+*.tmp
+*.swp
+*.swo
+
+### OS Files ###
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+__MACOSX/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+### Docker ###
+docker-data/
+.docker/
+
+### Editor backups ###
+*~
+*.bak
+*.orig
+
+### Env files ###
+.env
+.env.*

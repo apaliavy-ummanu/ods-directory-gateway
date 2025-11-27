@@ -1,0 +1,19 @@
+meta {
+  name: Get organisation by ODS code
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BASE_URL}}/organisations/:odsCode
+  body: none
+  auth: none
+}
+
+params:path {
+  odsCode: RTG
+}
+
+headers {
+  Accept: application/json
+}

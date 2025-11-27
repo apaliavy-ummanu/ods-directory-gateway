@@ -1,0 +1,26 @@
+meta {
+  name: Search organisations
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/organisations?name=Leeds&city=Leeds&postcode=LS1&active=true&primaryRoleOnly=false&page=1&pageSize=20
+  body: none
+  auth: none
+}
+
+params:query {
+  name: Leeds
+  city: Leeds
+  postcode: LS1
+  active: true
+  primaryRoleOnly: false
+  page: 1
+  pageSize: 20
+  ~roleCode: 141
+}
+
+headers {
+  ~Accept: application/json
+}

@@ -1,0 +1,406 @@
+openapi: 3.0.3
+info:
+  title: ODS Organisation Gateway API
+  version: 1.0.0
+  description: >
+    Simple façade over the NHS ODS FHIR API, exposing a cleaned-up organisation
+    model with roles and address flattened into a sane DTO.
+
+servers:
+  - url: https://ods-gateway.yourdomain.nhs.uk
+    description: Production
+  - url: https://ods-gateway-int.yourdomain.nhs.uk
+    description: Integration
+
+paths:
+  /organisations/{odsCode}:
+    get:
+      summary: Get organisation by ODS code
+      operationId: getOrganisationByOdsCode
+      parameters:
+        - name: odsCode
+          in: path
+          required: true
+          description: ODS organisation code (for example, 212, R1H, A83008)
+          schema:
+            type: string
+        - name: includeInactiveRoles
+          in: query
+          required: false
+          description: >
+            If true, returns both active and inactive roles.
+            If false or omitted, only active roles are returned.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Organisation found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organisation'
+              examples:
+                example:
+                  summary: Leeds City Council
+                  value:
+                    id: "212"
+                    odsCode: "212"
+                    name: "Leeds City Council"
+                    recordClass: "HSCOrg"
+                    isActive: true
+                    operationalPeriod:
+                      start: "1980-01-01"
+                      end: null
+                      dateType: "Operational"
+                    roles:
+                      - code: "141"
+                        display: "LOCAL AUTHORITY"
+                        primary: true
+                        status: "Active"
+                        operationalPeriod:
+                          start: "1980-01-01"
+                          end: null
+                          dateType: "Operational"
+                      - code: "37"
+                        display: "METROPOLITAN DISTRICT"
+                        primary: false
+                        status: "Active"
+                        operationalPeriod:
+                          start: "2013-04-01"
+                          end: null
+                          dateType: "Operational"
+                    address:
+                      lines:
+                        - "CIVIC HALL"
+                        - "CALVERLEY STREET"
+                      city: "Leeds"
+                      postalCode: "LS1 1UR"
+                      country: "England"
+                    metadata:
+                      lastUpdated: "2020-04-03T00:00:00Z"
+        '404':
+          description: Organisation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '502':
+          description: Upstream ODS FHIR API error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /organisations:
+    get:
+      summary: Search organisations
+      operationId: searchOrganisations
+      description: >
+        Search organisations using a subset of parameters mapped onto the ODS FHIR
+        /Organization search endpoint.
+      parameters:
+        - name: name
+          in: query
+          description: >
+            Case-insensitive substring match on organisation name.
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: City / town.
+          schema:
+            type: string
+        - name: postcode
+          in: query
+          description: Postcode (full or prefix).
+          schema:
+            type: string
+        - name: active
+          in: query
+          description: Filter by organisation activity status.
+          schema:
+            type: boolean
+        - name: roleCode
+          in: query
+          description: >
+            Filter by role code (for example, '141' for local authority, 'RO189' for GP practice).
+          schema:
+            type: string
+        - name: primaryRoleOnly
+          in: query
+          description: >
+            If true, only organisations where the matching role is a primary role are returned.
+          schema:
+            type: boolean
+            default: false
+        - name: lastUpdatedFrom
+          in: query
+          description: >
+            Return organisations last updated on or after this date (ISO-8601 date).
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          description: Page number (1-based).
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          description: Page size (max 200).
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganisationSearchResponse'
+              examples:
+                example:
+                  summary: Organisations search result
+                  value:
+                    total: 123
+                    page: 1
+                    pageSize: 2
+                    items:
+                      - id: "212"
+                        odsCode: "212"
+                        name: "Leeds City Council"
+                        recordClass: "HSCOrg"
+                        isActive: true
+                        operationalPeriod:
+                          start: "1980-01-01"
+                          end: null
+                          dateType: "Operational"
+                        roles:
+                          - code: "141"
+                            display: "LOCAL AUTHORITY"
+                            primary: true
+                            status: "Active"
+                            operationalPeriod:
+                              start: "1980-01-01"
+                              end: null
+                              dateType: "Operational"
+                        address:
+                          lines:
+                            - "CIVIC HALL"
+                            - "CALVERLEY STREET"
+                          city: "Leeds"
+                          postalCode: "LS1 1UR"
+                          country: "England"
+                        metadata:
+                          lastUpdated: "2020-04-03T00:00:00Z"
+                      - id: "R1H"
+                        odsCode: "R1H"
+                        name: "Leeds Teaching Hospitals NHS Trust"
+                        recordClass: "HSCOrg"
+                        isActive: true
+                        operationalPeriod:
+                          start: "1991-04-01"
+                          end: null
+                          dateType: "Operational"
+                        roles: []
+                        address: null
+                        metadata:
+                          lastUpdated: "2024-10-01T12:34:56Z"
+        '400':
+          description: Invalid search parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '502':
+          description: Upstream ODS FHIR API error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Organisation:
+      type: object
+      description: Simplified organisation view derived from ODS FHIR Organization.
+      required:
+        - id
+        - odsCode
+        - name
+        - recordClass
+        - isActive
+        - metadata
+      properties:
+        id:
+          type: string
+          description: Internal identifier (usually same as odsCode).
+          example: "212"
+        odsCode:
+          type: string
+          description: ODS organisation code.
+          example: "212"
+        name:
+          type: string
+          description: Organisation name.
+          example: "Leeds City Council"
+        recordClass:
+          type: string
+          description: >
+            ODS record class (for example, HSCOrg, HSCAS, HSCWard, HSCSubOrg).
+          example: "HSCOrg"
+        isActive:
+          type: boolean
+          description: >
+            Indicates whether the organisation is operationally active at the time of the lookup.
+        operationalPeriod:
+          $ref: '#/components/schemas/OperationalPeriod'
+        roles:
+          type: array
+          description: Current or historical roles assigned to the organisation.
+          items:
+            $ref: '#/components/schemas/OrganisationRole'
+        address:
+          $ref: '#/components/schemas/Address'
+        metadata:
+          $ref: '#/components/schemas/OrganisationMetadata'
+
+    OrganisationRole:
+      type: object
+      required:
+        - code
+        - display
+        - primary
+        - status
+      properties:
+        code:
+          type: string
+          description: ODS role code.
+          example: "141"
+        display:
+          type: string
+          description: Human-readable role description.
+          example: "LOCAL AUTHORITY"
+        primary:
+          type: boolean
+          description: True if this is the primary role.
+        status:
+          type: string
+          description: Role status.
+          enum: [Active, Inactive]
+        operationalPeriod:
+          $ref: '#/components/schemas/OperationalPeriod'
+
+    OperationalPeriod:
+      type: object
+      required:
+        - start
+      properties:
+        start:
+          type: string
+          format: date
+          description: Operational start date (YYYY-MM-DD).
+          example: "1980-01-01"
+        end:
+          type: string
+          format: date
+          nullable: true
+          description: Operational end date, if any.
+          example: "2013-03-31"
+        dateType:
+          type: string
+          nullable: true
+          description: >
+            Free-text date type (for example, 'Operational', 'Legal'), as supplied by ODS.
+          example: "Operational"
+
+    Address:
+      type: object
+      properties:
+        lines:
+          type: array
+          items:
+            type: string
+          description: Address lines, in order.
+          example:
+            - "CIVIC HALL"
+            - "CALVERLEY STREET"
+        city:
+          type: string
+          example: "Leeds"
+        postalCode:
+          type: string
+          example: "LS1 1UR"
+        country:
+          type: string
+          example: "England"
+
+    OrganisationMetadata:
+      type: object
+      required:
+        - lastUpdated
+      properties:
+        lastUpdated:
+          type: string
+          format: date-time
+          description: Last update timestamp from ODS FHIR (meta.lastUpdated).
+          example: "2020-04-03T00:00:00Z"
+
+    OrganisationSearchResponse:
+      type: object
+      required:
+        - total
+      properties:
+        total:
+          type: integer
+          description: Total number of records matching the search criteria.
+          example: 123
+        page:
+          type: integer
+          description: Current page number (1-based).
+          example: 1
+        pageSize:
+          type: integer
+          description: Page size.
+          example: 50
+        items:
+          type: array
+          description: List of organisations for the current page.
+          items:
+            $ref: '#/components/schemas/Organisation'
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Application-specific error code.
+          example: "UPSTREAM_ERROR"
+        message:
+          type: string
+          description: Human-readable error message.
+          example: "Failed to call ODS FHIR API"
+        details:
+          type: object
+          additionalProperties: true
+          description: Optional error details.

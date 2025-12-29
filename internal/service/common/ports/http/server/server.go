@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/labstack/echo/v4"
 	openapi_types "github.com/oapi-codegen/runtime/types"
+	"github.com/rs/zerolog/log"
 
 	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/ports/http"
 	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/utils"
@@ -30,6 +31,7 @@ func (s *ODSGatewayServer) SearchOrganisations(ctx echo.Context, params http.Sea
 		PageSize:        params.PageSize,
 	})
 	if err != nil {
+		log.Err(err).Msg("error searching organisations")
 		return ctx.JSON(500, err.Error())
 	}
 
@@ -62,6 +64,7 @@ func (s *ODSGatewayServer) GetOrganisationByOdsCode(
 		},
 	)
 	if err != nil {
+		log.Err(err).Msg("error getting organisation by ODS code")
 		return ctx.JSON(500, err.Error())
 	}
 
@@ -70,7 +73,7 @@ func (s *ODSGatewayServer) GetOrganisationByOdsCode(
 
 func mapGetOrganisationResponse(org domain.Organisation) http.Organisation {
 	return http.Organisation{
-		Id:       org.Id,
+		Id:       org.ID,
 		IsActive: org.IsActive,
 		Metadata: http.OrganisationMetadata{
 			LastUpdated: org.Metadata.LastUpdated,

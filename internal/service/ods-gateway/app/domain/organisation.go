@@ -5,7 +5,7 @@ import (
 )
 
 type Organisation struct {
-	Id                string
+	ID                string
 	OdsCode           string
 	Name              string
 	IsActive          bool

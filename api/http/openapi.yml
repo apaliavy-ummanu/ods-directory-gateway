@@ -3,7 +3,7 @@ info:
   title: ODS Organisation Gateway API
   version: 1.0.0
   description: >
-    Simple façade over the NHS ODS FHIR API, exposing a cleaned-up organisation
+    Simple facade over the NHS ODS FHIR API, exposing a cleaned-up organisation
     model with roles and address flattened into a sane DTO.
 
 servers:

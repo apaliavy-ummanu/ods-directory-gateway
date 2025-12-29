@@ -22,9 +22,6 @@ dist/
 go.work
 go.work.sum
 
-# Vendor (if you don't use `go mod vendor`)
-vendor/
-
 # Dependency dir created by tools
 Godeps/
 
@@ -86,6 +83,3 @@ docker-data/
 *.bak
 *.orig
 
-### Env files ###
-.env
-.env.*

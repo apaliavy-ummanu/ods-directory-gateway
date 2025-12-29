@@ -4,19 +4,6 @@ ODS Directory Gateway is a Go-based service that provides a unified API facade f
 
 ---
 
-## Features
-
-- **Gateway API**  
-  A single HTTP/JSON entry point for directory-style operations (lookup, listing, search, etc.).
-
-- **Extensible Architecture**  
-  Internal packages structured so new backends, transports, or behaviors can be added with minimal changes.
-
-- **Production-Oriented Layout**  
-  Uses a standard Go project structure with clear separation between public packages, internal logic, and command binaries.
-
----
-
 ## Project Structure
 
 High-level layout:
@@ -51,9 +38,14 @@ Install dependencies:
 make deps  
 ```
 
-Run API on specific port:
+Run API locally:
 ```shell
-PORT=8086 make run
+make run
+```
+
+Run dockerized environment:
+```shell
+make docker-run
 ```
 
 Import bruno collection from `docs/bruno` folder. 

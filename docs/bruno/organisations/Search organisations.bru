@@ -7,7 +7,7 @@ meta {
 get {
   url: {{BASE_URL}}/organisations?name=Leeds&city=Leeds&postcode=LS1&active=true&primaryRoleOnly=false&page=1&pageSize=20
   body: none
-  auth: none
+  auth: apikey
 }
 
 params:query {
@@ -23,4 +23,10 @@ params:query {
 
 headers {
   ~Accept: application/json
+}
+
+auth:apikey {
+  key: X-API-Key
+  value: protectMe!
+  placement: header
 }

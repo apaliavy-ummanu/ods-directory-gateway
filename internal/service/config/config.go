@@ -1,20 +1,29 @@
 package config
 
 import (
-	"os"
+	"time"
+
+	"github.com/caarlos0/env/v6"
 )
 
 type Config struct {
-	HTTPPort            string `env:"PORT" envDefault:"8080"`
-	APIKey              string `env:"API_KEY"`
-	OdsFhirAPIServerURL string `env:"ODS_FHIR_API_SERVER_URL"`
+	Account        string        `env:"ACCOUNT"`
+	HTTPPort       string        `env:"PORT" envDefault:"8080"`
+	APIKey         string        `env:"API_KEY"`
+	RequestTimeout time.Duration `env:"REQUEST_TIMEOUT" envDefault:"30s"`
+	LogLevel       string        `env:"LOG_LEVEL" envDefault:"INFO"`
+	ODSConfig      ODSConfig
 }
 
-// todo properly load env variables
+type ODSConfig struct {
+	ServerURL string `env:"ODS_FHIR_API_SERVER_URL"`
+}
+
 func NewConfigFromEnv() (Config, error) {
-	return Config{
-		HTTPPort:            os.Getenv("PORT"),
-		APIKey:              os.Getenv("API_KEY"),
-		OdsFhirAPIServerURL: "https://uat.directory.spineservices.nhs.uk/STU3",
-	}, nil
+	var cfg Config
+	if err := env.Parse(&cfg); err != nil {
+		return cfg, err
+	}
+
+	return cfg, nil
 }

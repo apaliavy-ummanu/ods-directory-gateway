@@ -23,7 +23,7 @@ func mapOrganisationToDomain(org fhirHTTP.OrganizationResource) domain.Organisat
 	op := getOperationalPeriod(org)
 
 	return domain.Organisation{
-		Id:       org.Id,
+		ID:       org.Id,
 		OdsCode:  odsCode,
 		Name:     org.Name,
 		IsActive: utils.Deref(org.Active),

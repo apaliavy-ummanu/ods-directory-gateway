@@ -18,5 +18,5 @@ type SeachOrganisationsRequest struct {
 
 type OdsFHIRClient interface {
 	SearchOrganisations(ctx context.Context, request SeachOrganisationsRequest) (*fhirHTTP.OrganizationBundle, error)
-	GetOrganisationById(ctx context.Context, organisationId string) (*fhirHTTP.OrganizationResource, error)
+	GetOrganisationByID(ctx context.Context, organisationID string) (*fhirHTTP.OrganizationResource, error)
 }

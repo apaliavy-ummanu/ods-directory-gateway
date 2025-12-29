@@ -4,10 +4,11 @@ import (
 	"context"
 	"strconv"
 
+	"github.com/pkg/errors"
+
 	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/utils"
 	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/common"
 	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/domain"
-	"github.com/pkg/errors"
 )
 
 type SearchOrganisationsQuery struct {
@@ -39,7 +40,10 @@ type searchOrganisationsQueryHandlerImpl struct {
 	fhirClient common.OdsFHIRClient
 }
 
-func (h *searchOrganisationsQueryHandlerImpl) Handle(ctx context.Context, query SearchOrganisationsQuery) (SearchOrganisationsResponse, error) {
+func (h *searchOrganisationsQueryHandlerImpl) Handle(
+	ctx context.Context,
+	query SearchOrganisationsQuery,
+) (SearchOrganisationsResponse, error) {
 	organisationBundle, err := h.fhirClient.SearchOrganisations(ctx, common.SeachOrganisationsRequest{
 		Name:            query.Name,
 		City:            query.City,

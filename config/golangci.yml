@@ -1,0 +1,86 @@
+# This file is the configuration file for golang-ci linter.
+# Options for analysis running.
+run:
+  concurrency: 4
+  deadline: 2m
+  issues-exit-code: 10
+  tests: true
+
+# Output configuration options.
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+# All available settings of specific linters.
+linters-settings:
+  gci:
+    sections:
+      - standard
+      - default # Default section: contains all imports that could not be matched to another section type.
+      - prefix(github.com/Cleo-Systems)
+    custom-order: true
+  gocyclo:
+    min-complexity: 20
+  godot:
+    exclude:
+      - "@Router"
+  gofmt:
+    simplify: true
+  goimports:
+    local-prefixes: github.com/Cleo-Systems
+  maligned:
+    suggest-new: true
+  depguard:
+    list-type: blacklist
+    include-go-root: false
+    packages-with-error-message:
+      - github.com/pkg/errors: "error wrapping is allowed only by fmt.Errorf"
+      - github.com/sirupsen/logrus: "logging is allowed only by zerolog"
+  misspell:
+    locale: UK
+  lll:
+    line-length: 140
+    tab-width: 1
+  tagliatelle:
+    case:
+      use-field-name: false
+      rules:
+        json: camel
+        yaml: camel
+
+# List of enabled linters.
+linters:
+  enable:
+    - bodyclose
+    - errcheck
+    - goconst
+    - gocritic
+    - gocyclo
+    - goimports
+    - gosimple
+    - gosec
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - nakedret
+    - staticcheck
+    - stylecheck
+    - unconvert
+    - unparam
+    - unused
+    - tagliatelle
+
+# Linter exception and limit rules.
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - dupl
+        - lll
+        - goconst
+
+  exclude-use-default: true
+  max-issues-per-linter: 0
+  max-same-issues: 0

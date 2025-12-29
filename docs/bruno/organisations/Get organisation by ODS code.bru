@@ -7,7 +7,7 @@ meta {
 get {
   url: {{BASE_URL}}/organisations/:odsCode
   body: none
-  auth: none
+  auth: apikey
 }
 
 params:path {
@@ -16,4 +16,10 @@ params:path {
 
 headers {
   Accept: application/json
+}
+
+auth:apikey {
+  key: X-API-Key
+  value: protectMe!
+  placement: header
 }

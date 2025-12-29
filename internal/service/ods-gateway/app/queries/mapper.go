@@ -13,6 +13,13 @@ const (
 	odsCodeURL      = "https://fhir.nhs.uk/Id/ods-organization-code"
 )
 
+const (
+	extensionRole         = "role"
+	extensionPrimaryRole  = "primaryRole"
+	extensionStatus       = "status"
+	extensionActivePeriod = "activePeriod"
+)
+
 func mapOrganisationToDomain(org fhirHTTP.OrganizationResource) domain.Organisation {
 	odsCode := org.Id
 	if *org.Identifier.System == odsCodeURL {
@@ -44,7 +51,7 @@ func getRoles(org fhirHTTP.OrganizationResource) []domain.OrganisationRole {
 	var roles []domain.OrganisationRole
 
 	for _, ext := range utils.Deref(org.Extension) {
-		// We only care about OrganizationRole extensions
+		// we only care about OrganizationRole extensions
 		if utils.Deref(ext.Url) != orgRoleURL {
 			continue
 		}
@@ -53,21 +60,21 @@ func getRoles(org fhirHTTP.OrganizationResource) []domain.OrganisationRole {
 
 		for _, inner := range utils.Deref(ext.Extension) {
 			switch utils.Deref(inner.Url) {
-			case "role":
+			case extensionRole:
 				if inner.ValueCoding != nil {
 					r.Code = utils.Deref(inner.ValueCoding.Code)
 					r.Display = utils.Deref(inner.ValueCoding.Display)
 				}
 
-			case "primaryRole":
+			case extensionPrimaryRole:
 				if inner.ValueBoolean != nil {
 					r.Primary = *inner.ValueBoolean
 				}
 
-			case "status":
+			case extensionStatus:
 				r.Status = utils.Deref(inner.ValueString)
 
-			case "activePeriod":
+			case extensionActivePeriod:
 				if inner.ValuePeriod != nil {
 					p := inner.ValuePeriod
 					op := domain.OperationalPeriod{
@@ -89,7 +96,7 @@ func getRoles(org fhirHTTP.OrganizationResource) []domain.OrganisationRole {
 			}
 		}
 
-		// Only include roles that at least have a code
+		// only include roles that at least have a code
 		if r.Code != "" {
 			roles = append(roles, r)
 		}
@@ -129,7 +136,7 @@ func getOperationalPeriod(org fhirHTTP.OrganizationResource) *domain.Operational
 			op.End = utils.Ref(p.End.Time)
 		}
 
-		// Find the DateType extension inside valuePeriod.extension
+		// find the DateType extension inside valuePeriod.extension
 		for _, inner := range utils.Deref(p.Extension) {
 			valueString := utils.Deref(inner.ValueString)
 			if utils.Deref(inner.Url) == dateTypeURL && valueString != "" {
@@ -138,7 +145,7 @@ func getOperationalPeriod(org fhirHTTP.OrganizationResource) *domain.Operational
 			}
 		}
 
-		// We only want the Operational one
+		// we only want the Operational one
 		if op.DateType == "Operational" {
 			return op
 		}

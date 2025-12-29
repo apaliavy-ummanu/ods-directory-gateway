@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{BASE_URL}}/organisations?name=Leeds&city=Leeds&postcode=LS1&active=true&primaryRoleOnly=false&page=1&pageSize=20
+  url: {{BASE_URL}}/organisations?name=Leeds&city=Leeds&postcode=LS1&active=true&primaryRoleOnly=false&page=1&pageSize=5
   body: none
   auth: apikey
 }
@@ -17,7 +17,7 @@ params:query {
   active: true
   primaryRoleOnly: false
   page: 1
-  pageSize: 20
+  pageSize: 5
   ~roleCode: 141
 }
 

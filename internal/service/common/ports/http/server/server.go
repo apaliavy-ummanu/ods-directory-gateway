@@ -29,24 +29,23 @@ func (s *ODSGatewayServer) SearchOrganisations(ctx echo.Context, params http.Sea
 		Active:          params.Active,
 		PrimaryRoleOnly: params.PrimaryRoleOnly,
 		PageSize:        params.PageSize,
+		Page:            params.Page,
 	})
 	if err != nil {
 		log.Err(err).Msg("error searching organisations")
 		return ctx.JSON(500, err.Error())
 	}
 
-	searchResult := http.OrganisationSearchResponse{
-		Page:     utils.Ref(1),
-		PageSize: params.PageSize,
-		Total:    result.TotalCount,
-	}
-
 	items := make([]http.Organisation, 0)
 	for _, r := range result.Organisations {
 		items = append(items, mapGetOrganisationResponse(r))
 	}
-	if len(items) > 0 {
-		searchResult.Items = utils.Ref(items)
+
+	searchResult := http.OrganisationSearchResponse{
+		Page:     params.Page,
+		PageSize: params.PageSize,
+		Total:    result.TotalCount,
+		Items:    items,
 	}
 
 	return ctx.JSON(200, searchResult)

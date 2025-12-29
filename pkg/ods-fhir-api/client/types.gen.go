@@ -246,6 +246,9 @@ type GetOrganizationResourcesParams struct {
 	// UnderscoreCount Number of results to return. Defaulted to first 20 records.
 	UnderscoreCount *string `form:"_count,omitempty" json:"_count,omitempty"`
 
+	// UnderscorePage Page number. Default 1
+	UnderscorePage *string `form:"_page,omitempty" json:"_page,omitempty"`
+
 	// UnderscoreSummary Return a count of the matching resources, without returning the actual matches.
 	UnderscoreSummary *GetOrganizationResourcesParamsSummary `form:"_summary,omitempty" json:"_summary,omitempty"`
 }

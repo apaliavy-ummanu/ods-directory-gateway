@@ -18,7 +18,8 @@ type SearchOrganisationsQuery struct {
 	RoleCode        *string
 	Active          *bool
 	PrimaryRoleOnly *bool
-	PageSize        *int
+	PageSize        int
+	Page            int
 }
 
 type SearchOrganisationsResponse struct {
@@ -52,6 +53,7 @@ func (h *searchOrganisationsQueryHandlerImpl) Handle(
 		Active:          query.Active,
 		PrimaryRoleOnly: query.PrimaryRoleOnly,
 		PageSize:        query.PageSize,
+		Page:            query.Page,
 	})
 	if err != nil {
 		return SearchOrganisationsResponse{}, errors.Wrap(err, "error getting organisation from ODS API")

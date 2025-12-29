@@ -13,7 +13,8 @@ type SeachOrganisationsRequest struct {
 	RoleCode        *string
 	Active          *bool
 	PrimaryRoleOnly *bool
-	PageSize        *int
+	PageSize        int
+	Page            int
 }
 
 type OdsFHIRClient interface {

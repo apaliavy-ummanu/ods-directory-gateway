@@ -102,13 +102,13 @@ type OrganisationRoleStatus string
 // OrganisationSearchResponse defines model for OrganisationSearchResponse.
 type OrganisationSearchResponse struct {
 	// Items List of organisations for the current page.
-	Items *[]Organisation `json:"items,omitempty"`
+	Items []Organisation `json:"items"`
 
 	// Page Current page number (1-based).
-	Page *int `json:"page,omitempty"`
+	Page int `json:"page"`
 
 	// PageSize Page size.
-	PageSize *int `json:"pageSize,omitempty"`
+	PageSize int `json:"pageSize"`
 
 	// Total Total number of records matching the search criteria.
 	Total int `json:"total"`
@@ -138,10 +138,10 @@ type SearchOrganisationsParams struct {
 	LastUpdatedFrom *openapi_types.Date `form:"lastUpdatedFrom,omitempty" json:"lastUpdatedFrom,omitempty"`
 
 	// Page Page number (1-based).
-	Page *int `form:"page,omitempty" json:"page,omitempty"`
+	Page int `form:"page" json:"page"`
 
 	// PageSize Page size (max 200).
-	PageSize *int `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+	PageSize int `form:"pageSize" json:"pageSize"`
 }
 
 // GetOrganisationByOdsCodeParams defines parameters for GetOrganisationByOdsCode.

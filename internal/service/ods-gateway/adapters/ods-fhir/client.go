@@ -33,7 +33,8 @@ func (c *Client) SearchOrganisations(
 		AddressCityContains:       req.City,
 		OdsOrgRole:                req.RoleCode,
 		OdsOrgPrimaryRole:         req.PrimaryRoleOnly,
-		UnderscoreCount:           utils.Ref(fmt.Sprintf("%d", utils.Deref(req.PageSize))),
+		UnderscoreCount:           utils.Ref(fmt.Sprintf("%d", req.PageSize)),
+		UnderscorePage:            utils.Ref(fmt.Sprintf("%d", req.Page)),
 	}
 	resp, err := c.apiClient.GetOrganizationResourcesWithResponse(ctx, &params)
 	if err != nil {

@@ -149,6 +149,7 @@ paths:
             format: date
         - name: page
           in: query
+          required: true
           description: Page number (1-based).
           schema:
             type: integer
@@ -156,6 +157,7 @@ paths:
             default: 1
         - name: pageSize
           in: query
+          required: true
           description: Page size (max 200).
           schema:
             type: integer
@@ -367,6 +369,9 @@ components:
       type: object
       required:
         - total
+        - page
+        - pageSize
+        - items
       properties:
         total:
           type: integer

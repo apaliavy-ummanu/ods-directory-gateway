@@ -212,6 +212,13 @@ paths:
             type: string
             example: ''
         - in: query
+          name: _page
+          description: Page number. Default 1
+          required: false
+          schema:
+            type: string
+            example: ''
+        - in: query
           name: _summary
           description: Return a count of the matching resources, without returning the actual matches.
           required: false

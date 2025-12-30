@@ -78,7 +78,7 @@ func mapGetOrganisationResponse(org domain.Organisation) http.Organisation {
 			LastUpdated: org.Metadata.LastUpdated,
 		},
 		Name:              org.Name,
-		OdsCode:           org.OdsCode,
+		OdsCode:           org.ODSCode,
 		RecordClass:       org.RecordClass,
 		OperationalPeriod: mapOperationalPeriod(org.OperationalPeriod),
 		Address:           mapOrganisationAddress(org.Address),

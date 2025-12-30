@@ -41,6 +41,9 @@ lint:
 
 fmt-lint: fmt lint
 
+fakes:
+	go generate ./...
+
 .PHONY: docker-build
 docker-build:
 	docker build -f deployments/Dockerfile -t $(DOCKER_IMAGE):$(DOCKER_TAG) .

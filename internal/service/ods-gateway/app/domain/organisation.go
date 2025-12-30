@@ -6,7 +6,7 @@ import (
 
 type Organisation struct {
 	ID                string
-	OdsCode           string
+	ODSCode           string
 	Name              string
 	IsActive          bool
 	Metadata          OrganisationMetadata

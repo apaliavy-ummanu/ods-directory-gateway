@@ -31,6 +31,10 @@ func (h *getOrganisationByODSCodeQueryHandlerImpl) Handle(
 	ctx context.Context,
 	query GetOrganisationByODSCodeQuery,
 ) (domain.Organisation, error) {
+	if query.ODSCode == "" {
+		return domain.Organisation{}, errors.New("ODS code is required")
+	}
+	
 	organisation, err := h.fhirClient.GetOrganisationByID(ctx, query.ODSCode)
 	if err != nil {
 		return domain.Organisation{}, errors.Wrap(err, "error getting organisation from ODS API")

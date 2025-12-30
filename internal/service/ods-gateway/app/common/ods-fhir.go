@@ -6,6 +6,8 @@ import (
 	fhirHTTP "github.com/Cleo-Systems/ods-directory-gateway/pkg/ods-fhir-api/client"
 )
 
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 -generate
+
 type SeachOrganisationsRequest struct {
 	Name            *string
 	City            *string
@@ -17,6 +19,7 @@ type SeachOrganisationsRequest struct {
 	Page            int
 }
 
+//counterfeiter:generate -o ./mocks/fake_ods_fhir_client.gen.go . OdsFHIRClient
 type OdsFHIRClient interface {
 	SearchOrganisations(ctx context.Context, request SeachOrganisationsRequest) (*fhirHTTP.OrganizationBundle, error)
 	GetOrganisationByID(ctx context.Context, organisationID string) (*fhirHTTP.OrganizationResource, error)

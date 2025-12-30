@@ -7,22 +7,22 @@ import (
 )
 
 const (
-	activePeriodURL = "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-ActivePeriod-1"
-	dateTypeURL     = "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-DateType-1"
-	orgRoleURL      = "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-OrganizationRole-1"
-	odsCodeURL      = "https://fhir.nhs.uk/Id/ods-organization-code"
+	ActivePeriodURL = "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-ActivePeriod-1"
+	DateTypeURL     = "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-DateType-1"
+	OrgRoleURL      = "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-OrganizationRole-1"
+	ODSCodeURL      = "https://fhir.nhs.uk/Id/ods-organization-code"
 )
 
 const (
-	extensionRole         = "role"
-	extensionPrimaryRole  = "primaryRole"
-	extensionStatus       = "status"
-	extensionActivePeriod = "activePeriod"
+	ExtensionRole         = "role"
+	ExtensionPrimaryRole  = "primaryRole"
+	ExtensionStatus       = "status"
+	ExtensionActivePeriod = "activePeriod"
 )
 
 func mapOrganisationToDomain(org fhirHTTP.OrganizationResource) domain.Organisation {
 	odsCode := org.Id
-	if *org.Identifier.System == odsCodeURL {
+	if *org.Identifier.System == ODSCodeURL {
 		odsCode = *org.Identifier.Value
 	}
 
@@ -31,7 +31,7 @@ func mapOrganisationToDomain(org fhirHTTP.OrganizationResource) domain.Organisat
 
 	return domain.Organisation{
 		ID:       org.Id,
-		OdsCode:  odsCode,
+		ODSCode:  odsCode,
 		Name:     org.Name,
 		IsActive: utils.Deref(org.Active),
 		Metadata: getMetadata(org),
@@ -52,7 +52,7 @@ func getRoles(org fhirHTTP.OrganizationResource) []domain.OrganisationRole {
 
 	for _, ext := range utils.Deref(org.Extension) {
 		// we only care about OrganizationRole extensions
-		if utils.Deref(ext.Url) != orgRoleURL {
+		if utils.Deref(ext.Url) != OrgRoleURL {
 			continue
 		}
 
@@ -60,21 +60,21 @@ func getRoles(org fhirHTTP.OrganizationResource) []domain.OrganisationRole {
 
 		for _, inner := range utils.Deref(ext.Extension) {
 			switch utils.Deref(inner.Url) {
-			case extensionRole:
+			case ExtensionRole:
 				if inner.ValueCoding != nil {
 					r.Code = utils.Deref(inner.ValueCoding.Code)
 					r.Display = utils.Deref(inner.ValueCoding.Display)
 				}
 
-			case extensionPrimaryRole:
+			case ExtensionPrimaryRole:
 				if inner.ValueBoolean != nil {
 					r.Primary = *inner.ValueBoolean
 				}
 
-			case extensionStatus:
+			case ExtensionStatus:
 				r.Status = utils.Deref(inner.ValueString)
 
-			case extensionActivePeriod:
+			case ExtensionActivePeriod:
 				if inner.ValuePeriod != nil {
 					p := inner.ValuePeriod
 					op := domain.OperationalPeriod{
@@ -86,7 +86,7 @@ func getRoles(org fhirHTTP.OrganizationResource) []domain.OrganisationRole {
 
 					// pick DateType (Operational / Legal etc.)
 					for _, pe := range utils.Deref(p.Extension) {
-						if utils.Deref(pe.Url) == dateTypeURL && pe.ValueString != nil {
+						if utils.Deref(pe.Url) == DateTypeURL && pe.ValueString != nil {
 							op.DateType = *pe.ValueString
 							break
 						}
@@ -124,7 +124,7 @@ func getRecordClassCode(org fhirHTTP.OrganizationResource) string {
 
 func getOperationalPeriod(org fhirHTTP.OrganizationResource) *domain.OperationalPeriod {
 	for _, ext := range utils.Deref(org.Extension) {
-		if utils.Deref(ext.Url) != activePeriodURL || ext.ValuePeriod == nil {
+		if utils.Deref(ext.Url) != ActivePeriodURL || ext.ValuePeriod == nil {
 			continue
 		}
 
@@ -139,7 +139,7 @@ func getOperationalPeriod(org fhirHTTP.OrganizationResource) *domain.Operational
 		// find the DateType extension inside valuePeriod.extension
 		for _, inner := range utils.Deref(p.Extension) {
 			valueString := utils.Deref(inner.ValueString)
-			if utils.Deref(inner.Url) == dateTypeURL && valueString != "" {
+			if utils.Deref(inner.Url) == DateTypeURL && valueString != "" {
 				op.DateType = valueString
 				break
 			}

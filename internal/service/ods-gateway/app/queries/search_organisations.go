@@ -6,9 +6,9 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/utils"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/common"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/domain"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/utils"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/common"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/domain"
 )
 
 type SearchOrganisationsQuery struct {

@@ -5,11 +5,11 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 	"github.com/rs/zerolog/log"
 
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/ports/http"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/utils"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/domain"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/queries"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/ports/http"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/utils"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/domain"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/queries"
 )
 
 type ODSGatewayServer struct {

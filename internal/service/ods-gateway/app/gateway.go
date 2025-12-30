@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/queries"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/queries"
 )
 
 type Queries struct {

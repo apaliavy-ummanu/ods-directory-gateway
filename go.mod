@@ -1,4 +1,4 @@
-module github.com/Cleo-Systems/ods-directory-gateway
+module github.com/Cleo-Systems/ods-fhir-gateway
 
 go 1.24.5
 

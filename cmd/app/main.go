@@ -5,8 +5,8 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/elog"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/elog"
 )
 
 func main() {

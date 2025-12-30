@@ -5,8 +5,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/common"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/domain"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/common"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/domain"
 )
 
 type GetOrganisationByODSCodeQuery struct {
@@ -34,7 +34,7 @@ func (h *getOrganisationByODSCodeQueryHandlerImpl) Handle(
 	if query.ODSCode == "" {
 		return domain.Organisation{}, errors.New("ODS code is required")
 	}
-	
+
 	organisation, err := h.fhirClient.GetOrganisationByID(ctx, query.ODSCode)
 	if err != nil {
 		return domain.Organisation{}, errors.Wrap(err, "error getting organisation from ODS API")

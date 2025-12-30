@@ -8,9 +8,9 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
-	svcHTTP "github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/ports/http"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/ports/http/server"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/config"
+	svcHTTP "github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/ports/http"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/ports/http/server"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/config"
 )
 
 func NewHTTPServer(config config.Config, server *server.ODSGatewayServer) *echo.Echo {

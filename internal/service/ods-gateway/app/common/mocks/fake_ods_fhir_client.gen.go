@@ -5,8 +5,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/common"
-	http "github.com/Cleo-Systems/ods-directory-gateway/pkg/ods-fhir-api/client"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/common"
+	http "github.com/Cleo-Systems/ods-fhir-gateway/pkg/ods-fhir-api/client"
 )
 
 type FakeOdsFHIRClient struct {

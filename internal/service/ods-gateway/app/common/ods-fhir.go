@@ -3,7 +3,7 @@ package common
 import (
 	"context"
 
-	fhirHTTP "github.com/Cleo-Systems/ods-directory-gateway/pkg/ods-fhir-api/client"
+	fhirHTTP "github.com/Cleo-Systems/ods-fhir-gateway/pkg/ods-fhir-api/client"
 )
 
 //go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 -generate

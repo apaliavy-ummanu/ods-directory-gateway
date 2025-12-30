@@ -6,14 +6,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/common/mocks"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/common/mocks"
 	"github.com/oapi-codegen/runtime/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/utils"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/queries"
-	http "github.com/Cleo-Systems/ods-directory-gateway/pkg/ods-fhir-api/client"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/utils"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/queries"
+	http "github.com/Cleo-Systems/ods-fhir-gateway/pkg/ods-fhir-api/client"
 )
 
 func newSearchHandlerWithMock(t *testing.T) (queries.SearchOrganisationsQueryHandler, *mocks.FakeOdsFHIRClient) {

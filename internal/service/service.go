@@ -11,13 +11,13 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/ports/http/server"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/config"
-	odsAdapter "github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/adapters/ods-fhir"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/queries"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/runtime"
-	odsHTTP "github.com/Cleo-Systems/ods-directory-gateway/pkg/ods-fhir-api/client"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/ports/http/server"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/config"
+	odsAdapter "github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/adapters/ods-fhir"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/queries"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/runtime"
+	odsHTTP "github.com/Cleo-Systems/ods-fhir-gateway/pkg/ods-fhir-api/client"
 )
 
 type Service struct {

@@ -1,9 +1,9 @@
 package queries
 
 import (
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/common/utils"
-	"github.com/Cleo-Systems/ods-directory-gateway/internal/service/ods-gateway/app/domain"
-	fhirHTTP "github.com/Cleo-Systems/ods-directory-gateway/pkg/ods-fhir-api/client"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/common/utils"
+	"github.com/Cleo-Systems/ods-fhir-gateway/internal/service/ods-gateway/app/domain"
+	fhirHTTP "github.com/Cleo-Systems/ods-fhir-gateway/pkg/ods-fhir-api/client"
 )
 
 const (
